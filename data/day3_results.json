@@ -1,0 +1,50 @@
+{
+  "https://books.toscrape.com/": {
+    "title": "All products | Books to Scrape - Sandbox",
+    "text_length": 1810,
+    "links_count": 73,
+    "depth": 0
+  },
+  "https://books.toscrape.com/index.html": {
+    "title": "All products | Books to Scrape - Sandbox",
+    "text_length": 1810,
+    "links_count": 73,
+    "depth": 1
+  },
+  "https://books.toscrape.com/catalogue/category/books/mystery_3/index.html": {
+    "title": "Mystery | \n     Books to Scrape - Sandbox",
+    "text_length": 1830,
+    "links_count": 73,
+    "depth": 1
+  },
+  "https://books.toscrape.com/catalogue/category/books/travel_2/index.html": {
+    "title": "Travel | \n     Books to Scrape - Sandbox",
+    "text_length": 1339,
+    "links_count": 63,
+    "depth": 1
+  },
+  "https://books.toscrape.com/catalogue/category/books/historical-fiction_4/index.html": {
+    "title": "Historical Fiction | \n     Books to Scrape - Sandbox",
+    "text_length": 1843,
+    "links_count": 73,
+    "depth": 1
+  },
+  "https://books.toscrape.com/catalogue/category/books_1/index.html": {
+    "title": "Books | \n     Books to Scrape - Sandbox",
+    "text_length": 1796,
+    "links_count": 73,
+    "depth": 1
+  },
+  "https://books.toscrape.com/catalogue/category/books/sequential-art_5/index.html": {
+    "title": "Sequential Art | \n     Books to Scrape - Sandbox",
+    "text_length": 1901,
+    "links_count": 73,
+    "depth": 1
+  },
+  "https://books.toscrape.com/catalogue/category/books/classics_6/index.html": {
+    "title": "Classics | \n     Books to Scrape - Sandbox",
+    "text_length": 1675,
+    "links_count": 71,
+    "depth": 1
+  }
+}
