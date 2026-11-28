@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Crawler report</title>
+  <style>
+    body { font-family: Georgia, serif; margin: 2rem; background: #f7f3ea; color: #1a1a1a; }
+    h1 { font-size: 1.8rem; }
+    .cards { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; }
+    .card { background: #fff; border: 1px solid #d9d0c0; padding: 1rem 1.2rem; min-width: 140px; }
+    .card strong { display: block; font-size: 1.4rem; }
+    table { border-collapse: collapse; width: 100%; max-width: 640px; background: #fff; }
+    th, td { border: 1px solid #d9d0c0; padding: 0.4rem 0.6rem; text-align: left; }
+    .bar-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.35rem 0; }
+    .bar-row .label { width: 160px; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar { height: 14px; background: #2f5d50; }
+    .bar.domain { background: #b85c38; }
+    .val { font-size: 0.85rem; }
+    pre { background: #fff; border: 1px solid #d9d0c0; padding: 1rem; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>Crawler report</h1>
+  <p>Generated at 2026-11-28T14:25:19.173137+00:00</p>
+  <div class="cards">
+    <div class="card"><span>Total</span><strong>1</strong></div>
+    <div class="card"><span>Successful</span><strong>1</strong></div>
+    <div class="card"><span>Failed</span><strong>0</strong></div>
+    <div class="card"><span>Blocked</span><strong>0</strong></div>
+    <div class="card"><span>Speed</span><strong>0.618 p/s</strong></div>
+    <div class="card"><span>Elapsed</span><strong>1.618 s</strong></div>
+  </div>
+
+  <h2>Status codes</h2>
+  <div><div class="bar-row"><span class="label">200</span><div class="bar" style="width:100%"></div><span class='val'>1</span></div></div>
+  <table>
+    <thead><tr><th>Code</th><th>Count</th></tr></thead>
+    <tbody><tr><td>200</td><td>1</td></tr></tbody>
+  </table>
+
+  <h2>Top domains</h2>
+  <div><div class="bar-row"><span class="label">books.toscrape.com</span><div class="bar domain" style="width:100%"></div><span class='val'>1</span></div></div>
+  <table>
+    <thead><tr><th>Domain</th><th>Pages</th></tr></thead>
+    <tbody><tr><td>books.toscrape.com</td><td>1</td></tr></tbody>
+  </table>
+
+  <h2>Raw JSON</h2>
+  <pre>{
+  "total_pages": 1,
+  "successful": 1,
+  "failed": 0,
+  "blocked": 0,
+  "avg_speed_pages_per_sec": 0.618,
+  "elapsed_sec": 1.618,
+  "status_codes": {
+    "200": 1
+  },
+  "top_domains": [
+    {
+      "domain": "books.toscrape.com",
+      "pages": 1
+    }
+  ],
+  "bytes_downloaded": 1810,
+  "progress_pct": 33.3,
+  "eta_sec": 3.2,
+  "generated_at": "2026-11-28T14:25:19.173137+00:00",
+  "extra": {
+    "visited": 1
+  }
+}</pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "start_urls": [
+    "https://books.toscrape.com/"
+  ],
+  "sitemaps": [],
+  "max_pages": 5,
+  "max_depth": 1,
+  "max_concurrent": 5,
+  "per_domain_limit": 2,
+  "requests_per_second": 2.0,
+  "respect_robots": true,
+  "min_delay": 0.3,
+  "jitter": 0.1,
+  "user_agent": "AsyncCrawler/1.0 (+day7)",
+  "same_domain_only": true,
+  "exclude_patterns": [],
+  "include_patterns": [],
+  "storage": {
+    "json": "C:\\Users\\\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\\Desktop\\crawler_assignment_overall\\data\\day7\\results.json",
+    "csv": "C:\\Users\\\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\\Desktop\\crawler_assignment_overall\\data\\day7\\results.csv",
+    "sqlite": "C:\\Users\\\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\\Desktop\\crawler_assignment_overall\\data\\day7\\crawler.db"
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "C:\\Users\\\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\\Desktop\\crawler_assignment_overall\\logs\\crawler.log"
+  },
+  "output": {
+    "stats_json": "C:\\Users\\\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\\Desktop\\crawler_assignment_overall\\data\\day7\\stats.json",
+    "html_report": "C:\\Users\\\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\\Desktop\\crawler_assignment_overall\\data\\day7\\report.html"
+  }
+}

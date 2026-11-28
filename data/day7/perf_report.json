@@ -1,0 +1,33 @@
+{
+  "sync_vs_async": {
+    "sync": {
+      "ok": 4,
+      "elapsed": 2.6860909999813884,
+      "speed": 1.489152824691239
+    },
+    "async": {
+      "ok": 2,
+      "elapsed": 0.7051074000191875,
+      "speed": 2.836447326954129,
+      "peak_memory_kib": 1037.455078125,
+      "current_memory_kib": 765.650390625
+    }
+  },
+  "scale": [
+    {
+      "target_pages": 20,
+      "successful": 20,
+      "elapsed": 8.681,
+      "speed": 2.305,
+      "peak_memory_mib": 6.793
+    },
+    {
+      "target_pages": 40,
+      "successful": 40,
+      "elapsed": 15.324,
+      "speed": 2.612,
+      "peak_memory_mib": 9.548
+    }
+  ],
+  "note": "For 100/500/1000 raise scale_test targets and rate limits carefully."
+}

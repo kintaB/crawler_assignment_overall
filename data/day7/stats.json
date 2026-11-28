@@ -1,0 +1,95 @@
+{
+  "total_pages": 5,
+  "successful": 5,
+  "failed": 0,
+  "blocked": 0,
+  "avg_speed_pages_per_sec": 1.538,
+  "elapsed_sec": 3.251,
+  "status_codes": {
+    "200": 5
+  },
+  "top_domains": [
+    {
+      "domain": "books.toscrape.com",
+      "pages": 5
+    }
+  ],
+  "bytes_downloaded": 8585,
+  "progress_pct": 100.0,
+  "eta_sec": 0.0,
+  "generated_at": "2026-11-28T14:25:11.551526+00:00",
+  "extra": {
+    "get_stats": {
+      "total_pages": 5,
+      "successful": 5,
+      "failed": 0,
+      "blocked": 0,
+      "avg_speed_pages_per_sec": 1.538,
+      "elapsed_sec": 3.251,
+      "status_codes": {
+        "200": 5
+      },
+      "top_domains": [
+        {
+          "domain": "books.toscrape.com",
+          "pages": 5
+        }
+      ],
+      "bytes_downloaded": 8585,
+      "progress_pct": 100.0,
+      "eta_sec": 0.0,
+      "generated_at": "2026-11-28T14:25:11.551383+00:00",
+      "visited": 5,
+      "storage": {
+        "backend": "MultiStorage",
+        "saved_count": 5,
+        "save_errors": 0,
+        "children": [
+          {
+            "backend": "JSONStorage",
+            "saved_count": 5,
+            "save_errors": 0
+          },
+          {
+            "backend": "CSVStorage",
+            "saved_count": 5,
+            "save_errors": 0
+          },
+          {
+            "backend": "SQLiteStorage",
+            "saved_count": 5,
+            "save_errors": 0
+          }
+        ]
+      },
+      "error_stats": {
+        "errors_by_type": {},
+        "successful_retries": 0,
+        "failed_after_retries": 0,
+        "avg_retry_wait_sec": 0.0,
+        "permanent_urls": {},
+        "attempts_logged": 0,
+        "circuit_breaker": {
+          "open_domains": {},
+          "failure_threshold": 5,
+          "recovery_timeout": 30.0
+        },
+        "fetch_errors": {}
+      },
+      "politeness": {
+        "requests_per_second_limit": 2.0,
+        "per_domain": true,
+        "current_req_per_sec": 1.675,
+        "avg_delay_sec": 0.597,
+        "total_wait_sec": 1.498,
+        "requests_tracked": 5,
+        "avg_observed_gap_sec": 0.597,
+        "blocked_by_robots": 0,
+        "robots_domains_cached": 1,
+        "min_delay": 0.3,
+        "jitter": 0.1,
+        "user_agent": "AsyncCrawler/1.0 (+day7)"
+      }
+    }
+  }
+}

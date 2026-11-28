@@ -19,9 +19,9 @@ logging.basicConfig(
 
 async def test_queue_priority() -> None:
     q = CrawlerQueue()
-    q.add_url_sync("https://low.example", priority=1)
-    q.add_url_sync("https://high.example", priority=10)
-    q.add_url_sync("https://mid.example", priority=5)
+    q.add_url("https://low.example", priority=1)
+    q.add_url("https://high.example", priority=10)
+    q.add_url("https://mid.example", priority=5)
     order = []
     for _ in range(3):
         order.append(await q.get_next())
