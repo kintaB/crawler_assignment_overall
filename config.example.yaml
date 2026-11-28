@@ -1,0 +1,25 @@
+start_urls:
+  - https://books.toscrape.com/
+sitemaps: []  # e.g. https://example.com/sitemap.xml ; empty → try /sitemap.xml
+max_pages: 8
+max_depth: 1
+max_concurrent: 5
+per_domain_limit: 2
+requests_per_second: 2.0
+respect_robots: true
+min_delay: 0.3
+jitter: 0.1
+user_agent: "AsyncCrawler/1.0 (+day7)"
+same_domain_only: true
+exclude_patterns: []
+include_patterns: []
+storage:
+  json: data/day7/results.json
+  csv: data/day7/results.csv
+  sqlite: data/day7/crawler.db
+logging:
+  level: INFO
+  file: logs/crawler.log
+output:
+  stats_json: data/day7/stats.json
+  html_report: data/day7/report.html
