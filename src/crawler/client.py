@@ -3,6 +3,7 @@ import logging
 import random
 import re
 import time
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 import aiohttp
@@ -20,6 +21,7 @@ from .rate_limiter import RateLimiter
 from .retry import CircuitBreaker, RetryStrategy
 from .robots_parser import RobotsParser
 from .semaphore_manager import SemaphoreManager
+from .storage import DataStorage
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +57,8 @@ class AsyncCrawler:
         enable_circuit_breaker: bool = True,
         circuit_failure_threshold: int = 5,
         circuit_recovery_timeout: float = 30.0,
+        storage: DataStorage | None = None,
+        storage_batch_size: int = 1,
     ) -> None:
         self.max_concurrent = max_concurrent
         self.max_depth = max_depth
@@ -94,6 +98,9 @@ class AsyncCrawler:
 
         self.session: aiohttp.ClientSession | None = None
         self.parser = HTMLParser()
+        self.storage = storage
+        self.storage_batch_size = max(1, storage_batch_size)
+        self._storage_buffer: list[dict] = []
 
         self.visited_urls: set[str] = set()
         self.failed_urls: dict[str, str] = {}
@@ -136,10 +143,55 @@ class AsyncCrawler:
         await self.close()
 
     async def close(self) -> None:
+        await self._flush_storage()
+        if self.storage is not None:
+            try:
+                await self.storage.close()
+            except Exception as e:
+                logger.warning("storage close error: %s", e)
         if self.session is not None and not self.session.closed:
             await self.session.close()
         self.session = None
         self.robots.set_session(None)
+
+    def _to_storage_record(self, page: dict) -> dict:
+        meta = dict(page.get("metadata") or {})
+        return {
+            "url": page.get("url") or "",
+            "title": page.get("title") or "",
+            "text": page.get("text") or "",
+            "links": page.get("links") or [],
+            "metadata": meta,
+            "crawled_at": datetime.now(timezone.utc).isoformat(),
+            "status_code": page.get("status_code") or meta.get("status_code") or 200,
+            "content_type": page.get("content_type")
+            or meta.get("content_type")
+            or "text/html",
+        }
+
+    async def _persist_page(self, page: dict) -> None:
+        if self.storage is None:
+            return
+        record = self._to_storage_record(page)
+        if self.storage_batch_size <= 1:
+            await self.storage.save_safe(record)
+            return
+        self._storage_buffer.append(record)
+        if len(self._storage_buffer) >= self.storage_batch_size:
+            await self._flush_storage()
+
+    async def _flush_storage(self) -> None:
+        if self.storage is None:
+            return
+        if self._storage_buffer:
+            batch = self._storage_buffer
+            self._storage_buffer = []
+            for record in batch:
+                await self.storage.save_safe(record)
+        try:
+            await self.storage.flush()
+        except Exception as e:
+            logger.warning("storage flush error: %s", e)
 
     async def _polite_wait(self, url: str, user_agent: str) -> bool:
         """
@@ -374,13 +426,14 @@ class AsyncCrawler:
         self.fetch_errors = {}
         self._last_request_at = None
         self._observed_gaps = []
+        self._storage_buffer = []
         self.robots.blocked_count = 0
 
         queue = CrawlerQueue()
         allowed_hosts = {urlparse(u).netloc.lower() for u in start_urls}
 
         for url in start_urls:
-            if queue.add_url_sync(url, priority=10):
+            if queue.add_url(url, priority=10):
                 self.url_depth[url] = 0
 
         started_at = time.perf_counter()
@@ -399,19 +452,20 @@ class AsyncCrawler:
                 errors = page.get("errors") or []
                 if "blocked by robots.txt" in errors:
                     self.failed_urls[url] = "blocked by robots.txt"
-                    await queue.mark_failed(url, "blocked by robots.txt")
+                    queue.mark_failed(url, "blocked by robots.txt")
                     return
                 if errors:
                     err = "; ".join(errors)
                     self.failed_urls[url] = err
-                    await queue.mark_failed(url, err)
+                    queue.mark_failed(url, err)
                     return
 
                 if len(self.processed_urls) >= max_pages:
                     return
 
                 self.processed_urls[url] = page
-                await queue.mark_processed(url)
+                queue.mark_processed(url)
+                await self._persist_page(page)
 
                 if depth >= self.max_depth:
                     return
@@ -431,13 +485,13 @@ class AsyncCrawler:
                     if next_depth > self.max_depth:
                         continue
                     priority = max(0, self.max_depth - next_depth)
-                    added = await queue.add_url(link, priority=priority)
+                    added = queue.add_url(link, priority=priority)
                     if added:
                         self.url_depth[link] = next_depth
             except Exception as e:
                 logger.warning("crawl error %s: %s", url, e)
                 self.failed_urls[url] = str(e)
-                await queue.mark_failed(url, str(e))
+                queue.mark_failed(url, str(e))
 
         while len(self.processed_urls) < max_pages:
             while (
@@ -467,13 +521,15 @@ class AsyncCrawler:
         if in_flight:
             await asyncio.gather(*in_flight, return_exceptions=True)
 
+        await self._flush_storage()
         self._print_progress(queue, started_at)
         logger.info(
-            "crawl finished: processed=%s failed=%s visited=%s blocked=%s errors=%s",
+            "crawl finished: processed=%s failed=%s visited=%s blocked=%s errors=%s storage=%s",
             len(self.processed_urls),
             len(self.failed_urls),
             len(self.visited_urls),
             len(self.blocked_urls),
             self.get_error_stats()["errors_by_type"],
+            None if self.storage is None else self.storage.get_stats(),
         )
         return self.processed_urls

@@ -1,0 +1,15 @@
+{
+  "json_count": 5,
+  "csv_count": 5,
+  "sqlite_count": 5,
+  "sample_titles": [
+    "All products | Books to Scrape - Sandbox",
+    "All products | Books to Scrape - Sandbox",
+    "Books | \n     Books to Scrape - Sandbox"
+  ],
+  "sample_urls": [
+    "https://books.toscrape.com/",
+    "https://books.toscrape.com/index.html",
+    "https://books.toscrape.com/catalogue/category/books_1/index.html"
+  ]
+}
